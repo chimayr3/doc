@@ -1,0 +1,34 @@
+==== Commande pour gérer les machines virtuelles
+
+.Config inittab pour console kvm avec virsh
+[source,config]
+----
+# console for kvm
+co:23:respawn:/sbin/agetty -8 115200 ttyS0 linux
+----
+
+.Cloner une machine
+----
+virt-clone --connect=qemu:///system -o ORIGINAL_GUEST -n NAME -f DISKFILE
+----
+
+.Exemple
+----
+virt-clone --connect=qemu:///system -o template -n mynewserver.local -f /srv/vm/mynewserver.local/mynewserver.local.qcow2
+----
+
+.Attacher un iso a une machine
+----
+virsh attach-disk puma.inexad.local /srv/vm/_iso/CentOS-6.5-x86_64-minimal.iso hdc --type cdro
+----
+
+.Exemple
+----
+virsh attach-disk myserver.local /srv/vm/_iso/CentOS-6.5-x86_64-minimal.iso hdc --type cdro
+----
+
+.Creer une image qcow2
+----
+qemu-img create -f qcow2 image.qcow 20G
+----
+
