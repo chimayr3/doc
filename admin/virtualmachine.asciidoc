@@ -7,6 +7,12 @@
 co:23:respawn:/sbin/agetty -8 115200 ttyS0 linux
 ----
 
+Acceder a une VM KVM via console
+----
+# pour quitter mode console Ctrl+Alt Gr+]
+virsh console nom_serveur
+----
+
 .Cloner une machine
 ----
 virt-clone --connect=qemu:///system -o ORIGINAL_GUEST -n NAME -f DISKFILE
