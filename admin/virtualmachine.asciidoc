@@ -38,3 +38,8 @@ virsh attach-disk myserver.local /srv/vm/_iso/CentOS-6.5-x86_64-minimal.iso hdc 
 qemu-img create -f qcow2 image.qcow 20G
 ----
 
+.Port forwarding ip pour installer machine kvm via vnc
+----
+ssh -L <local port>:<remote computer>:<remote port> <user>@<remote ip>
+# en local utilise le client vnc vinagre
+----
