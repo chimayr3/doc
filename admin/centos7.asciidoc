@@ -1,11 +1,12 @@
 ==== Installation Centos 7
 
-.Note
 [NOTE]
 installation sur machine virtuelle KVM
 
 .Réseau et nom d'hôte
+----
 Activer l'interface : configuration dhcp ok
+----
 
 .Source de l'installation
 ----
@@ -13,10 +14,13 @@ http//mirror.centos.org/centos-7/7/os/x86_64
 ----
 
 .Sélection de logiciels
+----
 Installation Minimale (pour faire un template kvm)
+----
 
 .Destination de l'installation (partitionnement)
 ----
+/		256 MB vgroot
 /home		256 MB vgroot
 /var/log	256 MB vgroot
 /tmp		256 MB vgroot
@@ -35,5 +39,4 @@ d : supprimer la partition sda2
 n : creer une nouvelle partition sda2
 => prendre tout les secteurs disponibles
 faire un pvextend /dev/sda2
-
 
