@@ -1,44 +1,49 @@
-==== Commande pour gérer les machines virtuelles
+==== Commande pour gÃ©rer les machines virtuelles
 
-.Config inittab pour console kvm avec virsh
-[source,config]
+====== Config inittab pour console kvm avec virsh
+
+[source]
 ----
 # console for kvm
 co:23:respawn:/sbin/agetty -8 115200 ttyS0 linux
 ----
 
-Acceder a une VM KVM via console
+====== Acceder a une VM KVM via console
+
+[source,bash]
 ----
 # pour quitter mode console Ctrl+Alt Gr+]
 virsh console nom_serveur
 ----
 
-.Cloner une machine
+====== Cloner une machine
+
+[source,bash]
 ----
 virt-clone --connect=qemu:///system -o ORIGINAL_GUEST -n NAME -f DISKFILE
-----
-
-.Exemple
-----
+# Exemple :
 virt-clone --connect=qemu:///system -o template -n mynewserver.local -f /srv/vm/mynewserver.local/mynewserver.local.qcow2
 ----
 
-.Attacher un iso a une machine
+====== Attacher un iso a une machine
+
+[source,bash]
 ----
 virsh attach-disk puma.inexad.local /srv/vm/_iso/CentOS-6.5-x86_64-minimal.iso hdc --type cdro
-----
-
-.Exemple
-----
+# Exemple :
 virsh attach-disk myserver.local /srv/vm/_iso/CentOS-6.5-x86_64-minimal.iso hdc --type cdro
 ----
 
-.Creer une image qcow2
+====== Creer une image qcow2
+
+[source,bash]
 ----
 qemu-img create -f qcow2 image.qcow 20G
 ----
 
-.Port forwarding ip pour installer machine kvm via vnc
+====== Port forwarding ip pour installer machine kvm via vnc
+
+[source,bash]
 ----
 ssh -L <local port>:<remote computer>:<remote port> <user>@<remote ip>
 # en local utilise le client vnc vinagre
