@@ -1,42 +1,42 @@
 ==== Installation Centos 7
 
-[NOTE]
 installation sur machine virtuelle KVM
 
-.Réseau et nom d'hôte
-----
-Activer l'interface : configuration dhcp ok
-----
+====== RÃ©seau et nom d'hÃ´te
 
-.Source de l'installation
-----
-http//mirror.centos.org/centos-7/7/os/x86_64
-----
+ Activer l'interface : configuration dhcp ok
 
-.Sélection de logiciels
-----
-Installation Minimale (pour faire un template kvm)
-----
 
-.Destination de l'installation (partitionnement)
-----
-/		256 MB vgroot
-/home		256 MB vgroot
-/var/log	256 MB vgroot
-/tmp		256 MB vgroot
-/var		512 MB vgroot
-/usr		1.0 GB vgroot
-/boot		500 MB /dev/sda1
-swap		512 MB vgroot
-----
+====== Source de l'installation
 
-WARNING: Choisir de faire l'installation automatique pour avoir /boot et /
-Cliquer sur le bouton 'Modifier...' a coté de 'Volume Group' et choisir comme
-Stratégie sur la taille : 'Aussi grand que possible' sinon on se retrouve avec un Volume Group de la taille des partitions créées.
+ http//mirror.centos.org/centos-7/7/os/x86_64
 
-TIP: sinon avec fdisk :
-d : supprimer la partition sda2
-n : creer une nouvelle partition sda2
-=> prendre tout les secteurs disponibles
-faire un pvextend /dev/sda2
+====== SÃ©lection de logiciels
+
+ Installation Minimale (pour faire un template kvm)
+
+====== Destination de l'installation (partitionnement)
+
+ /		256 MB vgroot
+ /home		256 MB vgroot
+ /var/log	256 MB vgroot
+ /tmp		256 MB vgroot
+ /var		512 MB vgroot
+ /usr		1.0 GB vgroot
+ /boot		500 MB /dev/sda1
+ swap		512 MB vgroot
+
+====== Astuces pour la gestion des disques
+
+ Choisir de faire l'installation automatique pour avoir /boot et /
+ Cliquer sur le bouton 'Modifier...' a cotÃ© de 'Volume Group' et choisir comme
+ StratÃ©gie sur la taille : 'Aussi grand que possible' sinon on se retrouve
+ avec un Volume Group de la taille des partitions crÃ©Ã©es.
+
+ sinon avec fdisk :
+ d : supprimer la partition sda2
+ n : creer une nouvelle partition sda2
+ => prendre tout les secteurs disponibles
+ faire un pvextend /dev/sda2
+
 
