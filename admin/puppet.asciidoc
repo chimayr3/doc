@@ -1,12 +1,14 @@
-==== Installation de Puppet sur CentOS 6
+== Installation de Puppet sur CentOS 6
 
-.Reference
-xref:https://docs.puppetlabs.com/guides/install_puppet/pre_install.html[pre install]
-xref:https://docs.puppetlabs.com/puppet/latest/reference/system_requirements.html#basic-requirements[basic requirements]
-xref:https://docs.puppetlabs.com/guides/install_puppet/install_el.html[install RH and derivatives]
-xref:https://docs.puppetlabs.com/guides/install_puppet/post_install.html[post install]
+==== References
+* link:https://docs.puppetlabs.com/guides/install_puppet/pre_install.html[puppetlabs 'pre install']
+* link:https://docs.puppetlabs.com/puppet/latest/reference/system_requirements.html#basic-requirements[puppetlabs 'basic requirements']
+* link:https://docs.puppetlabs.com/guides/install_puppet/install_el.html[puppetlabs 'install RH and derivatives']
+* link:https://docs.puppetlabs.com/guides/install_puppet/post_install.html[puppetlabs 'post install']
 
-.Installation du puppet master
+====== Installation du puppet master
+
+[source,bash]
 ----
 # update centos
 yum update -y
@@ -16,49 +18,54 @@ yum install puppet-server
 puppet resource package puppet-server ensure=latest
 ----
 
-.Installation du puppet agent sur une machine cliente
+====== Installation du puppet agent sur une machine cliente
+
+[source,bash]
 ----
 yum install puppet
 # optionnel, pour etre d'avoir la derniere version du client puppet
 puppet resource package puppet ensure=latest
 ----
 
-.Configuration du master
+====== Configuration /etc/puppet/puppet.conf
 
-.Configuration /etc/puppet/puppet.conf
+[source]
 ----
 [main]
 # puppet hostname que le master utilisera
 dns_alt_names = puppet,puppet.example.local
 ----
 
-.Creation des certificats en lancant puppet master pour la premiere fois
+====== Creation des certificats en lancant puppet master pour la premiere fois
+
+[source,bash]
 ----
 puppet master --verbose --no-daemonize
   Notice: Starting Puppet master version 3.7.3
 # press Ctrl+C pour killer le process
 ----
 
-.Configuration du client /etc/puppet/puppet.conf
+====== Configuration du client /etc/puppet/puppet.conf
+
+[source]
 ----
 [main]
 server = puma
 dns_alt_names = puma,puma.inexad.local
 ----
 
-.Demarrage du puppet agent sur le client
+====== Demarrage du puppet agent sur le client
+
+[source,bash]
 ----
 /etc/init.d/puppet start
 ----
 
-.Gestion de la cle client sur le master
+====== Gestion de la cle client sur le master
+
+[source,bash]
 ----
 puppet ca list
   webapp01  (SHA256) 31:BE:2D: [...]
 puppet cert --allow-dns-alt-names sign webapp01
 ----
-
-
-
-
-
