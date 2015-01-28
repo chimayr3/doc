@@ -1,3 +1,11 @@
+Extensions :
+
+ .key : clé privé
+ .csr : fichier de demande de signature (Certificate Signing Request)
+ .crt/.cer : certificat (au format X509)
+ .txt : chaine de certification
+ .p7b : certificat au format PKCS7
+
 ==== Génération d'un certificat Web
 
 ====== Génération de la clé privé
@@ -26,11 +34,11 @@ Email Address []:
 ----
 
 Deux choix possible :
- 1) envoyer le fichier CSR à un organisme (CA autorité de certification)
- pour obtenier le certificat signé par la clé privée de l'organisme
- 2) signer moi même le certificat
+1) envoyer le fichier CSR à un organisme (CA autorité de certification)
+pour obtenier le certificat signé par la clé privée de l'organisme
+2) signer moi même le certificat
  
-===== Auto-signer le certificat
+====== Auto-signer le certificat
 
 Génération de la clé privée de l'autorité de certification
 
@@ -74,6 +82,7 @@ Certificat signé = domain.crt
 [source,bash]
 ----
 cat domain.cer domain.txt > domain.chain.cer
+----
 
 ====== 2. configurer Nginx
 
@@ -90,3 +99,7 @@ server {
   ...
 }
 ----
+
+==== Configuration Apache
+
+ TOTO ...
