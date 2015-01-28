@@ -2,7 +2,8 @@ Extensions :
 
  .key : clé privé
  .csr : fichier de demande de signature (Certificate Signing Request)
- .crt/.cer : certificat (au format X509)
+ .crt : certificat serveur
+ .cer : certificat serveur (identique à .crt)
  .txt : chaine de certification
  .p7b : certificat au format PKCS7
 
@@ -102,4 +103,32 @@ server {
 
 ==== Configuration Apache
 
- TOTO ...
+====== ApacheSSL
+
+[source]
+----
+SSLEngine on
+SSLCipherSuite ALL:!ADH:!DSS:!EXPORT56:!AES256-SHA:!DHE-RSA-AES256-SHA:@STRENGTH:+3DES:+DES
+SSLProtocol ALL -SSLv2
+SSLCertificateFile        conf/ssl/domain.crt
+SSLCertificateKeyFile     conf/ssl/domain.key
+SSLCertificateChainFile   conf/ssl/domain.chain.crt
+----
+
+====== Apache mod_ssl
+
+[source]
+----
+SSLCertificateFile        conf/ssl/domain.crt
+SSLCertificateKeyFile     conf/ssl/domain.key
+SSLCertificateChainFile   conf/ssl/domain.chain.crt
+
+# configuration du SSL
+# 128-bit mini PFS favorisé
+#SSLCipherSuite !ADH:!DSS:!RC2:HIGH:MEDIUM:+3DES:+RC4
+# 128-bit securité maximale
+SSLCipherSuite !ADH:!DSS:!RC4:HIGH:+3DES
+
+SSLProtocol all -SSLv2 -SSLv3
+SSLHonorCipherOrder on  # apache 2.1+
+----
