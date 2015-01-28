@@ -14,13 +14,13 @@ Note : Documentation basé sur du centos
  Apache/mod_security : module sécurité applicative pour Apache
  Apache/mod_evasive  : protection anti ddos Apache
 
-====== Vérification Basique
+====== Vérifications Basiques
 
 [source,bash]
 ----
 # >> vérifier les éxécutables setuid root 
 find / -user root -perm /u+s
-# >> vérifier les sockets réseau ouverte
+# >> vérifier les sockets réseau ouvertes
 netstat -tulanp
 # >> mettre à jour le système
 # debian & debian like
@@ -30,7 +30,7 @@ yum update
 # ArchLinux
 pacman -Syu
 # >> supprimer les logiciels inutiles
-# lister les logiciels installé
+# lister les logiciels installés
 # RH / CentOS
 rpm -qa
 ----
