@@ -1,6 +1,6 @@
 ==== Securité Linux
 
-Note : Documentation basé sur du centos
+Note : Documentation basée sur du centos
 
 ====== Logiciels de sécurité
 
