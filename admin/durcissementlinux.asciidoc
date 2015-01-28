@@ -1,0 +1,145 @@
+==== Securité Linux
+
+Note : Documentation basé sur du centos
+
+====== Logiciels de sécurité
+
+ fail2ban :
+ auditd   :
+ portsentry
+
+====== Configuration ssh
+
+ > Si accès ssh via internet, utiliser un port différent de 22
+ > Clé DSA non recommandé
+ > clé >= 2048 bits pour RSA
+ > clé >= 256 bits pour ECDSA
+ > les utilisateurs utilisants uniquemement le service sftp doivent
+   être chrooté via l'option ChrootDirectory
+ > Voir la fonction de la directive ForceCOmmand
+
+[source]
+----
+# File /etc/ssh/sshd_config
+ListenAdress 1.2.3.4:2222
+Protocol 2
+PermitRootLogin no
+StrictModes yes
+UserPrivilegeSeparation sandbox
+PermitEmptyPasswords no
+MaxAuthTries 2
+LoginGraceTime 30
+PrintLastLog yes
+AllowUsers user1 user 2
+AllowGroups group1 group2
+PermitUserEnvironment no
+AllowTcpForwarding no
+X11Forwarding no
+ForwardX11Trusted no
+----
+
+[source]
+----
+# File /etc/ssh/ssh_config
+StrictHostKeyChecking ask
+VerifyHostKeyDNS ask
+----
+
+====== Configuration fstab
+
+[source]
+----
+/tmp     defaults,nosuid,noexec,nodev
+/home    defaults,nosuid,nodev
+/var     defaults,nosuid
+/var/tmp defaults,nosuid,noexec,nodev
+/boot    defaults,nosuid,noexec,nodev
+/web     defaults,nosuid,nodev
+/data    defaults,nosuid,noexec,nodev
+----
+
+====== Protection Physique
+
+Obliger l'utilisation du mot de passe root en mode single user
+
+[source]
+----
+# file /etc/inittab
+# require the root pw when booting into single user mode
+~~:S:wait:/sbin/sulogin
+# Don't allow any nut to kill the server
+#ca::ctrlaltdel:/sbin/shutdown
+# Autoriser les utilisateurs du fichier /etc/shutdown.allow
+# de faire un ctrl+ alt + del avec l'option -a du shutdown
+#ca::ctrlaltdel:/sbin/shutdown -a -t3 -r now
+----
+
+Désactiver l'USB si ce n'est pas utile
+
+[source,bash]
+----
+echo 'blacklist usb-storage' > /etc/modprobe.d/blacklist-usbstorage
+----
+
+====== Protection du HOMEDIR
+
+[source,bash]
+----
+chmod 700 /root /home/*
+# configurer un umask en 077 pour les utilisateurs
+----
+
+====== Password Policies
+
+ configuration du fichier /etc/login.defs
+
+
+Utiliser sha512 au lieu de md5
+
+[source,bash]
+----
+authconfig --passalgo=sha512 --update
+----
+
+====== Restriction de cron et at
+
+ configuration de :
+ /etc/cron.deny
+ /etc/at.deny
+
+====== Sysctl 
+
+[source]
+----
+net.ipv4.ip_forward = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.tcp_max_syn_backlog = 1280
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.tcp_syncookies = 1
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.tcp_timestamps = 0
+----
+
+====== TCP Wrappers
+
+ Configuration des fichiers :
+ /etc/hosts.deny
+ /etc/hosts.allow
+
+====== Iptables
+
+ A configurer selon les besoins
+ Par défaut configurer INPUT à DROP et autoriser les flux un par un
+ FORWARD à DROP aussi si pas besoin
+
