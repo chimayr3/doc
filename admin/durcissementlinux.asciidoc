@@ -4,9 +4,36 @@ Note : Documentation basé sur du centos
 
 ====== Logiciels de sécurité
 
- fail2ban :
- auditd   :
- portsentry
+ fail2ban            : bloquer les tentatives de bruteforce notamment ssh !
+ auditd              : audit
+ aide                : Advenced Intrusion Detection Environment
+ portsentry          : détection scan de ports
+ chrootkit           : anti rootkit
+ rkhunter            : anti rootkit
+ snort               : Intrusion Detection System
+ Apache/mod_security : module sécurité applicative pour Apache
+ Apache/mod_evasive  : protection anti ddos Apache
+
+====== Vérification Basique
+
+[source,bash]
+----
+# >> vérifier les éxécutables setuid root 
+find / -user root -perm /u+s
+# >> vérifier les sockets réseau ouverte
+netstat -tulanp
+# >> mettre à jour le système
+# debian & debian like
+apt-get update && apt-get upgrade
+# RH / CentOS
+yum update
+# ArchLinux
+pacman -Syu
+# >> supprimer les logiciels inutiles
+# lister les logiciels installé
+# RH / CentOS
+rpm -qa
+----
 
 ====== Configuration ssh
 
