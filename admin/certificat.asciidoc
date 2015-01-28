@@ -1,0 +1,92 @@
+==== Génération d'un certificat Web
+
+====== Génération de la clé privé
+
+[source,bash]
+----
+openssl genrsa 1024 > domain.key
+# sécurisation de la clé
+chmod 400 domain.key
+----
+
+====== Génération du fichier de demande de signature de certificat
+(CSR Certificate Signing Request)
+
+[source,bash]
+----
+openssl req -new -key domain.key > domain.csr
+
+Country Name (2 letter code) [AU]:FR
+State or Province Name (full name) [Some-State]:Nord
+Locality Name (eg, city) []:Lille
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:IXD
+Organizational Unit Name (eg, section) []:
+Common Name (eg, YOUR name) []:domain.fr
+Email Address []:
+----
+
+Deux choix possible :
+ 1) envoyer le fichier CSR à un organisme (CA autorité de certification)
+ pour obtenier le certificat signé par la clé privée de l'organisme
+ 2) signer moi même le certificat
+ 
+===== Auto-signer le certificat
+
+Génération de la clé privée de l'autorité de certification
+
+[source,bash]
+----
+openssl genrsa -des3 1024 > ca.key
+----
+
+A partir de la clé privée, génération d'un certificat x509 pour une durée de validité d'un an auto-signé
+(la valeur de 'Common Name' doit être différente de celui donné pour la clé)
+
+[source,bash]
+----
+openssl req -new -x509 -days 365 -key ca.key > ca.crt
+
+Country Name (2 letter code) [AU]:FR
+State or Province Name (full name) [Some-State]:Nord
+Locality Name (eg, city) []:Lille
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:IXD
+Organizational Unit Name (eg, section) []:
+Common Name (eg, YOUR name) []:cert_CA
+Email Address []:
+----
+
+====== Signature du certificat serveur par le CA (Certificat Autority)
+
+[source,bash]
+----
+openssl x509 -req -in domain.csr -out domain.crt -CA ca.crt -CAkey ca.key \
+ -CAcreateserial -CAserial ca.srl
+----
+
+Certificat signé = domain.crt
+
+=> il faut installer le certificat de l'autorité de certification (ca.crt) dans chaque navigateur client
+
+==== Configuration Nginx
+
+====== 1. Concaténer les 2 fichiers .cer et .txt
+
+[source,bash]
+----
+cat domain.cer domain.txt > domain.chain.cer
+
+====== 2. configurer Nginx
+
+[source]
+----
+server {
+  listen               443;
+  server_name          www.domain.com;
+  ssl                  on;
+  ssl_certificate      domain.chain.cer;
+  ssl_certificate_key  domain.key;
+  ssl_protocols        TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers          !ADH:!DSS:!RC2:!RC4:HIGH:MEDIUM:+AES128;
+  ...
+}
+----
