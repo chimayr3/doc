@@ -1,9 +1,39 @@
 ==== Securité Linux
 
-Note : Documentation basée sur du centos
+Note : /!\ Documentation basée essentiellement sur du centos
+
+====== Généralités
+
+ > Protection physique : configuration BIOS
+ > Installer uniquement les logiciels essentiels selon l'utilisation de la machine
+   => Désactiver les services installés et inutiles
+   => minimiser les logiciels pour minimiser le risque de failles
+ > un service réseau par système ou machine virtuelle ou conteneur (docker)
+ > séparer en partition disque /tmp, /home, /usr, /var/, /var/tmp + utilisation nosuid,noexec,nodev
+ > Ne jamais laisser un logiciel avec la configuration par défaut, surtout si celui-ci
+   est un service ouvert sur le net (ssh,nginx,apache,smtp,...)
+ > Protéger les comptes utilisateurs
+ > Protéger l'accès ssh efficacement
+ > utiliser un firewall (configuration iptables avec table INPUT en DROP par défaut)
+   En plus du firewall on peut utiliser les TCP Wrapper
+   + fail2ban pour bloquer les tentatives de bruteforce
+   + portsentry potentiellement pour bloquer les tentatives de scans
+ > Installer un logiciel d'analyse de logs (logwatch par exemple)
+ > Mettre à jour le système régulièrement
+ > Monitorer les systèmes
+ > Sauvegarder les systèmes et les données
+ > configurer le service NTP
+ > installer un IDS
+ > mettre une banniere de connexion précisant qu'il est interdit de se connecter à la machine
+   dans la conf ssh
+ > Faire de la veille sur la sécurité (être au courant des dernières vulnérablités)
+ > Faire preuve de bon sens
+
 
 ====== Logiciels de sécurité
 
+ sysstat             : sar + iostat
+ logwatch            : analyseur de log avec rapport journalier par mail
  fail2ban            : bloquer les tentatives de bruteforce notamment ssh !
  auditd              : audit
  aide                : Advenced Intrusion Detection Environment
@@ -11,6 +41,7 @@ Note : Documentation basée sur du centos
  chrootkit           : anti rootkit
  rkhunter            : anti rootkit
  snort               : Intrusion Detection System
+ schred              : supprimer un fichier efficacement
  Apache/mod_security : module sécurité applicative pour Apache
  Apache/mod_evasive  : protection anti ddos Apache
 
@@ -63,6 +94,7 @@ PermitUserEnvironment no
 AllowTcpForwarding no
 X11Forwarding no
 ForwardX11Trusted no
+Banner /etc/ban
 ----
 
 [source]
@@ -85,6 +117,13 @@ VerifyHostKeyDNS ask
 /data    defaults,nosuid,noexec,nodev
 ----
 
+Avec /boot en readonly (attention mise à jour noyau)
+
+[source]
+----
+/boot    defaults,ro,nosuid,noexec,nodev
+----
+
 ====== Protection Physique
 
 Obliger l'utilisation du mot de passe root en mode single user
@@ -101,11 +140,17 @@ Obliger l'utilisation du mot de passe root en mode single user
 #ca::ctrlaltdel:/sbin/shutdown -a -t3 -r now
 ----
 
-Désactiver l'USB si ce n'est pas utile
+Désactiver l'USB si ce n'est pas utile (2 solutions)
 
 [source,bash]
 ----
 echo 'blacklist usb-storage' > /etc/modprobe.d/blacklist-usbstorage
+----
+
+[source]
+----
+# File /etc/modprobe.d/no-usb
+install usb-storage /bin/true
 ----
 
 ====== Protection du HOMEDIR
@@ -170,3 +215,43 @@ net.ipv4.tcp_timestamps = 0
  Par défaut configurer INPUT à DROP et autoriser les flux un par un
  FORWARD à DROP aussi si pas besoin
 
+====== Fork Bomb
+
+Mettre en place des limites notamment sur le nombre de processus pour éviter les fork bomb
+
+[source,bash]
+----
+# fork bomb bash
+:(){ :|:& };:
+----
+
+[source,ruby]
+----
+# fork bomb ruby
+loop { fork }
+----
+
+[source,python]
+----
+# fork bomb python
+import os
+
+while True:
+  os.fork()
+----
+
+[source]
+----
+# /etc/security/limits.conf
+# > protection contre les fork bomb
+*  hard  nproc  500
+----
+
+====== Désactiver IPV6 si inutile
+
+[source]
+----
+# File /etc/sysconfig/network (CentOS)
+NETWORKING_IPV6=no
+IPV6INIT=no
+----
