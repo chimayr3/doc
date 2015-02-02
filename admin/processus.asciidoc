@@ -1,20 +1,60 @@
 ==== Processus Linux
 
+Commandes utiles pour gérer les processus
+
+ ps      : afficher l'état des processus en cours
+ top     : afficher les tâches linux
+ htop    : top amélioré
+ pgrep   : recherche d'un processus suivant son nom ou d'autres élèments
+ kill    : terminer un processus ou envoyer un signal
+ pkill   : kill d'un processus suivant son nom ou d'autres élèments
+ killall : kill un processus selon son nom
+ nice    : modifier la priorité d'un processus
+ renice  : modifier la priorité d'un processus
+ 
 ====== Commandes ps
 
 Définitions :
 
- > LWP (Light-weight process) = un thread (ps -L)
+ > LWP  : un thread (Light-weight process)
+ > NLWP : nombre de lwps (thread) d'un processus
+ > PPID : Parent process ID
+ > PID  : Process ID
 
 ps par défaut n'affiche pas tous les processus.
 
 [source,bash]
 ----
+# Afficher tous les processus
+ps -ef
+
+# Afficher tous les processus (bsd style)
+ps aux
+
+# Afficher les processus par le nom ou le process id
+ps -C apache2
+
+# Afficher le processus par son id
+ps -f -p 21435,21436
+
+
 # Afficher tous les processus avec en première colone le nombre de thread
 ps -e -o nlwp,pid,lwp,args
 
 # Afficher les processus d'un utilisateur en particulier
 ps -u root
+
+# Afficher les 5 processus qui consomme le plus de CPU
+ps aux --sort=pcpu|head -5
+
+# Afficher les processus en arbre
+ps -f --forest
+
+# Afficher les processus fils d'un processus parent
+ps -f --ppid 12219
+
+# Afficher les threads d'un processus
+ps -p 5335 -L
 ----
 
 ====== Limites nproc
