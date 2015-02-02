@@ -1,0 +1,38 @@
+==== Processus Linux
+
+====== Commandes ps
+
+Définitions :
+
+ > LWP (Light-weight process) = un thread (ps -L)
+
+ps par défaut n'affiche pas tous les processus.
+
+[source,bash]
+----
+# Afficher tous les processus avec en première colone le nombre de thread
+ps -e -o nlwp,pid,lwp,args
+
+# Afficher les processus d'un utilisateur en particulier
+ps -u root
+----
+
+====== Limites nproc
+
+Les nproc permettent de limiter le nombre de processus par utilisateur.
+
+Vérifier les limites nproc
+
+[source,bash]
+----
+ulimit -u
+----
+
+Configuration des limites nproc au niveau du fichier /etc/security/limits.conf
+
+[source]
+----
+orable soft nproc 2047
+oracle prod nproc 16384
+----
+
