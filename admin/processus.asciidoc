@@ -11,6 +11,7 @@ Commandes utiles pour gérer les processus
  killall : kill un processus selon son nom
  nice    : modifier la priorité d'un processus
  renice  : modifier la priorité d'un processus
+ vmstat  : afficher les statistiques de la mémoire virtuelle
  
 ====== Commandes ps
 
@@ -55,6 +56,17 @@ ps -f --ppid 12219
 
 # Afficher les threads d'un processus
 ps -p 5335 -L
+----
+
+====== Commande vmstat
+
+[source,bash]
+----
+# afficher le nombre de forks depuis le boot de la machine
+vmstat -f
+
+# l'info de la commande 'vmstat -f' est disponible dans /proc/stat
+grep 'process' /proc/stat|awk '{print $2}'
 ----
 
 ====== Limites nproc
