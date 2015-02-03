@@ -1,0 +1,12 @@
+==== Analyse peformance Linux
+
+====== Outils
+
+ top
+ htop
+ vmstat
+ atop
+ iostat
+ mpstat
+ uptime
+ 
