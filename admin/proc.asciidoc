@@ -1,6 +1,46 @@
 ==== Détail du /proc Linux
 
- /proc/cpuinfo :
+Seulement les fichier important pour moi sont représenté ici. Le man page de proc permet
+d'avoir des informations plus détaillées.
+
+Source : link:http://manpagesfr.free.fr/man/man5/proc.5.html[man_proc_fr]
+
+----
+/proc/[number]           : sous-répertoire pour chaque processus en cours ayant comme nom le PID.
+/proc/[number]/cmdline   : fichier contenant la ligne de commande complète du processus, sauf si 
+                           zombie
+/proc/[number]/cwd       : lien symbolique sur le répertoire de travail courant du processus
+/proc/[number]/environ   : environement du processus (entrées séparées par des octets nul)
+----
+
+[source,bash]
+----
+cat /proc/16974/environ|tr '\000' '\n'
+----
+
+----
+/proc/[number]/exe       : un lien symbolique représentant le chemin réel de la commande en cours 
+                           d'exécution
+/proc/[number]/fd/       : sous-répertoire contenant une entrée pour chaque fichier ouvert par le 
+                           processus
+/proc/[number]/oom_score : notation du processus, plus il est élevè, plus le processus à de chance
+                           d'être tué si il y a un OOM (Out Of Memory)
+/proc/[number]/root      : lien symbolique vers la racine du système (configurable avec chroot)
+/proc/[number]/stat      : information sur l'état du processus (utilisé par la commande ps)
+/proc/[number]/status    : Info de stat et statm dans un format lisible pour l'homme
+/proc/[number]/task/     : sous-répertoire qui contient un sous-répertoire pour chaque thread du 
+                           processus. Le nom du sous-répertoire est la valeur numérique du TID du 
+                           thread.
+/proc/cmdline            : arguments passés au noyau lors du boot (via grub, lilo, ...)
+/proc/cpuinfo            : info de l'architecture et des processeurs utilisés
+/proc/filesystems        : liste des systèmes de fichiers pris en charge par le noyau.
+/proc/loadavg            : ficheir indiquant le load à 1, 5 et 15 minutes, ensuite nombre de 
+                           processus/thread en cours d'exécution <slash> nombre de processus/thread 
+                           présent sur la machine suivit du dernier processus créé sur le système
+/proc/meminfo            : Indique la quantité de mémoire libre et utilisé
+                           (utilisé par la commande free)
+/proc/mounts             : liste de tous les systèmes de fichiers actuellement montés sur le système
+----
 
 ==== Restaurer un fichier supprimé grâce à /proc
 
