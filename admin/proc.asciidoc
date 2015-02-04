@@ -1,0 +1,62 @@
+==== Détail du /proc Linux
+
+ /proc/cpuinfo :
+
+==== Restaurer un fichier supprimé grâce à /proc
+
+Cette technique fonctionne uniquement si le fichier supprimé 
+est ouvert par un processus
+
+====== Cas pratique
+ 
+[source,bash]
+----
+# On crée un fichier nommé monFichier.txt
+echo 'Hello World!' > /tmp/monFichier.txt
+
+# on ouvre le fichier avec less
+less /tmp/monFichier.txt
+
+# Ouvrir une autre console en root
+
+# on supprime le fichier
+rm -f /tmp/monFichier.txt
+
+# via lsof on récupére le pid du processus qui a ouvert monFichier.txt
+lsof|grep deleted
+less      12300 myuser    4r      REG      253,2          13     120982 /tmp/monFichier.txt (deleted)
+
+# on va dans les infos du processus
+ls -l /proc/12300/fd/
+total 0
+lrwx------ 1 myuser users 64 fÃ©v  4 10:56 0 -> /dev/pts/3
+lrwx------ 1 myuser users 64 fÃ©v  4 10:56 1 -> /dev/pts/3
+lrwx------ 1 myuser users 64 fÃ©v  4 10:56 2 -> /dev/pts/3
+lr-x------ 1 myuser users 64 fÃ©v  4 10:56 3 -> /dev/tty
+lr-x------ 1 myuser users 64 fÃ©v  4 10:56 4 -> /tmp/monFichier.txt (deleted)
+
+# on récupére le fichier supprimer via un cp du descripteur de fichier
+cp /proc/12300/fd/4 /tmp/monFichier.txt.backup
+
+# on vérifie que le fichier est restauré correctement
+cat /tmp/monFichier.txt.backup
+Hello World!
+----
+
+Informations :
+
+ Avec cette technique la restauration de fichier oracle à déjà fonctionné.
+ Dans ce cas des précautions sont à prendre :
+ > Ne pas arrêter le moteur oracle (sinon le perd le descripteur de fichier)
+ > Ne pas recopier les données dans la partition où se trouve les données.
+   (car elles y sont encore et on risque de les effacer pour de bon)
+ > Faire en sorte qu'il n'y ai plus d'écriture au niveau de la bdd
+   (le mieux est de couper les applications)
+ > faire une petite priére.
+ 
+ > Procédure théorique :
+ >>> identifier les fichiers supprimés via un 'lsof|grep deleted'
+ >>> copier les fichiers depuis le descripteur de fichier '/proc/<pid>/fd/<num>'
+ >>> couper le moteur
+ >>> recopier les fichiers dans la partition
+ >>> démarrer le monteur
