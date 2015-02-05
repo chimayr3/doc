@@ -77,6 +77,13 @@ sar -S
 sar -b
 ----
 
+====== Load Average (sar -q)
+
+[source,bash]
+----
+sar -q
+----
+
 ====== Activité I/O par block device (sar -d)
 
 [source,bash]
