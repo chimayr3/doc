@@ -1,12 +1,94 @@
-==== Analyse peformance Linux
+==== Analyse performance Linux (Performance_monitoring)
 
-====== Outils
+==== Outils
 
  top
  htop
+ sar
  vmstat
  atop
  iostat
  mpstat
  uptime
+ 
+==== Utilisation de sar (systat)
+
+====== Utilisation CPU (sar -u)
+
+ %user   : % utilisation cpu produit par les utilisateurs
+ %nice   : % utilisation cpu produit par les utilisateurs 'nicé'
+ %system : % utilisation cpu produit par le système
+ %iowait : % temps ou le/les cpu(s) est au repos en attente d'une
+           solicitation I/O disque
+ %steal  : ?
+ %idle   : % temps ou le/les cpu(s) sont au repos et le système n'est pas
+           en attente d'une solicitation I/O disque
+
+[source,bash]
+----
+# Afficher l'utilisation cpu pour le jour courant
+sar -u
+
+# afficher l'utilisation cpu pour le jour (historique de 1 mois)
+# ici pour le jour 10 du mois courant ou précédent
+sar -u -f /var/log/sa/sa10
+
+# afficher l'utilisation cpu toutes les secondes ...
+sar -u 1
+
+# ... 3 fois
+sar -u 1 3
+
+# Afficher l'utilisation CPU pour chaque core
+sar -u -P ALL
+
+# Afficher l'utilisation CPU pour un core spécifique
+# ici le core 2 (commence par le core 0)
+sar -u -P 2
+----
+
+====== Utilisation de la mémoire (sar -r)
+
+ kbmemfree : quantité de mémoire libre en kilobytes
+ kbmemused : quantité de mémoire utilisée en kilobytes
+ %memuser  : pourcentage de mémoire utilisée
+ kbbuffers : quantité de buffers utilisé par le noyau en kilobytes
+ kbcached  : quantité de mémoire utilisé en cache par le kernel
+ kbswpfree : quantité de mémoire swap libre
+ kbswpused : quantité de mémoire swap utilisée
+ ...
+
+[source,bash]
+----
+sar -r
+----
+
+====== Utilisatin de la swap (sar -S)
+
+[source,bash]
+----
+sar -S
+----
+
+====== Activités global I/O (sar -b)
+
+[source,bash]
+----
+sar -b
+----
+
+====== Activité I/O par block device (sar -d)
+
+[source,bash]
+----
+sar -d 1
+----
+
+
+
+
+
+ 
+ 
+ 
  
