@@ -91,7 +91,42 @@ sar -q
 sar -d 1
 ----
 
+==== Utilisation de atop - chercher après les I/O
 
+[source,bash]
+----
+# voir les infos pour atop
+atop --help
+
+# rafraichir toutes les deux secondes
+# chercher l'élément 'DSK' pour l'utilisation disque
+# en pourcentage
+atop -d 2
+----
+
+==== Utilisation de pidstat (voir les activitées par processus)
+
+====== Utilisation cpu (pidstat -u)
+
+[source,bash]
+----
+# Utilisation cpu
+pidstat -u
+
+# Utilisation cpu pour le PID 1337 ...
+pidstat -u -p 1337
+
+# ... rafraichi toutes les 2 secondes
+pidstat -u -p 1337 2
+----
+
+====== Utilisation I/O (pidstat -d)
+
+[source,bash]
+----
+# utilisation I/O
+pidstat -d
+----
 
 
 
