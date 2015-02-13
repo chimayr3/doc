@@ -1,0 +1,32 @@
+==== Bash Best Practices
+
+ > Incrémenter de deux espaces à la place d'une tabulation
+
+====== Coder proprement en bash :)
+
+[source,bash]
+----
+# Mauvaise pratique
+cat /proc/cpuinfo|grep ^processor
+
+#Bonne pratique
+grep ^processor /proc/cpuinfo
+----
+
+[source,bash]
+----
+# Mauvaise pratique
+grep ^processor /proc/cpuinfo|wc -l
+
+# Bonne pratique
+grep -c ^processor /proc/cpuinfo
+----
+
+[source,bash]
+----
+# Mauvaise pratique
+free -m|grep ^Mem|awk '{print $2}'
+
+# Bonne pratique
+free -m|awk '/^Mem/ {print $2}'
+----
