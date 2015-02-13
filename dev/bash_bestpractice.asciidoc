@@ -1,8 +1,98 @@
 ==== Bash Best Practices
 
- > Incrémenter de deux espaces à la place d'une tabulation
+ Un script shell doit commencer par "#!/usr/bin/env bash" pour la portabilité
+ 
+ Le Shell doit être utiliser pour de petites tâches, sans manipulation de données
+ importante et où la performance n'est pas primordiale. Au delà de 100 lignes le
+ choix d'un autre langage est certainement plus judicieux. Penser à Python.
+ 
+ Un exécutable Shell ne requiert pas d'extension. Pour les librairies on peut utiliser
+ l'extension .sh afin de la différencier d'une librairie écrit dans un autre langage
+ ayant le même nom et donc la même utilité.
+ 
+ les SUID/SGID sont interdit pour les script Shell. Utilisez sudo pour un accès privilégié !
+ 
+ Les messages d'erreurs doivent être envoyé vers STDERR
+ 
+[source,bash]
+----
+echo 'error message' >&2
+----
+ 
+ Commenter chaque script d'un header avec un minimum de description
+ 
+ Commenter chaque fonction avec les éléments suivants
+  > description de la fonction
+  > les variables globales utilisées
+  > les arguments données
+  > les valeurs retournées
+ 
+ Ne pas mettre de commentaire inutiles dans le code
+ 
+ Utiliser un "# TODO" pour un code temporaire/un début de solution/un code imparfait
+ 
+ Indenter de 2 espaces. Ne pas utiliser de tabulation pour la lisibilité.
+ 
+ Faire des lignes de maximum 80 caractères.
+ 
+ Spliter les pipes
+ 
+[source,bash]
+----
+command1 \
+  | command2 \
+  | command3 \
+  | command4
+----
 
-====== Coder proprement en bash :)
+ Mettre ; do et then sur la même ligne que while, for et if.
+ else prend sa propre ligne
+ 
+ Pour chaque choix d'un case indéter que d'un espace
+ 
+ Utiliser ${var} à la place de $var
+ 
+ Quote, utiliser guillemet double si il faut interpréter des variables
+ Sinon utiliser des guillemets simple.
+ 
+ Utiliser ${@} si il n'y a pas de raison spécifique d'utiliser ${*}
+ 
+ Préférez utiliser $(command) à la place de `command`. Proscrire eval.
+ 
+ Pour les tests préférer l'écriture [[ ... ]]
+ 
+ Utiliser des chemins explicites lors de l'utilisation du wildcard
+ 
+[source,bash]
+----
+Solution dangereuse
+rm -f *
+
+Solution plus propre
+rm -rf ./*
+----
+ 
+ Ne pas utiliser de pipes to While. Préférez faire une boucle.
+ 
+ Les noms de fonction doivent être en minuscule, avec des underscores pour
+ séparer des mots si besoin.
+ 
+ Utiliser des variables similaires, par exemple "for zone in ${zones} ; do  ..."
+ 
+ Les constantes et les variables d'environnement doivent être en majuscule
+ 
+ Le nom du fichier script doit être en minuscule, avec des underscore si besoin.
+ 
+ Les variables en lecture seul doivent avoir l'attribut readonly ou declare -r
+ 
+ Les variables de fonction doivent avoir l'attribut local
+ 
+ Si le script est long avec beaucoup de fonction, utiliser une fonction main
+ avec l'appel en bas de script : main "${@}"
+
+ Etre cohérent et faire preuve de bon sens
+
+====== Coder proprement en bash :) & Astuces
 
 [source,bash]
 ----
@@ -30,3 +120,7 @@ free -m|grep ^Mem|awk '{print $2}'
 # Bonne pratique
 free -m|awk '/^Mem/ {print $2}'
 ----
+
+====== Source
+
+link:https://google-styleguide.googlecode.com/svn/trunk/shell.xml[Google Shell's Style Guide]
