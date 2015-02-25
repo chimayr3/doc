@@ -1,0 +1,40 @@
+==== Linux Cheat Sheet
+
+====== Compte qui n'expire jamais
+
+[source,bash]
+----
+chage -m 0 -M 99999 -I -1 -E -1 <user>
+----
+
+====== Connaitre le fabriquant/modéle d'un disque
+
+[source,bash]
+----
+cat /sys/block/sda/device/vendor
+cat /sys/block/sda/device/model
+----
+
+====== Afficher le nombre de forks depuis le démarrage de la machine
+
+[source,bash]
+----
+# solution 1
+vmstat -f
+# solution 2
+awk '/^processes/ {print $2}' /proc/stat
+----
+
+====== Calculer le nombre de processeur
+
+[source,bash]
+----
+grep -c ^processor /proc/cpuinfo
+----
+
+====== Calculer le nombre de coeur
+
+[source,bash]
+----
+grep -i '^physical id' /proc/cpuinfo|sort -u|wc -l
+----
