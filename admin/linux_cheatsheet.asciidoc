@@ -38,3 +38,17 @@ grep -c ^processor /proc/cpuinfo
 ----
 grep -i '^physical id' /proc/cpuinfo|sort -u|wc -l
 ----
+
+====== Afficher les droits d'un fichier
+
+[source,bash]
+----
+# droit en octal
+stat -c %a /tmp
+# droit en human readable
+stat -c %A /tmp
+# Afficher les owner user:group
+stat -c '%U:%G' /tmp
+# afficher l'id des owner
+stat -c '%u:%g' /tmp
+----
