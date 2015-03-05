@@ -7,6 +7,42 @@ Extensions :
  .txt : chaine de certification
  .p7b : certificat au format PKCS7
 
+==== Openssl
+
+====== Afficher les informations d'un certificat
+
+[source,bash]
+----
+openssl x509 -in domain.crt noout --text
+----
+
+====== Vérifier qu'un certificat est valide pour un CA
+
+[source,bash]
+----
+openssl verify -CAfile ca.crt domain.crt
+----
+
+====== Créer une autorité de certificat
+
+[source,bash]
+----
+openssl req -new -x509 -extensions v3_ca -newkey rsa:4096 -keyout ca.key -out ca.crt -config ca-config
+----
+
+ > req : utilitaire de génération de certificats et de demandes de certificat PKCS#10.
+ > new : nouvelle demande de certificat.
+ > x509 : cette option génère un certificat auto-signé à la place d'une demande de 
+   certificat. Elle est utilisée typiquement pour générer des certificats de test ou 
+   le certificat auto-signé racine d'une CA.
+ > extensions v3_ca : permet de générer un certificat SSL v3, en se référant à la 
+   section v3_ca du fichier de configuration d'OpenSSL.
+ > newkey rsa:4096 : Génération d'une clé privée RSA de 4096 bits.
+ > keyout private/ca.key : donne le nom de fichier où la clé privée créée sera écrite.
+ > out certs/ca.crt : spécifie le nom du fichier (le certificat) de sortie.
+ > config ca-config : permet d'utiliser un fichier de configuration alternatif, 
+   à la place d'openssl.cn
+
 ==== Génération d'un certificat Web
 
 ====== Génération de la clé privé
