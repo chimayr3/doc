@@ -52,3 +52,20 @@ stat -c '%U:%G' /tmp
 # afficher l'id des owner
 stat -c '%u:%g' /tmp
 ----
+
+====== /etc/group -> /etc/gshadow
+
+[source,bash]
+----
+grpconv
+# grpck pour verifier le fichier /etc/group
+----
+
+
+====== /etc/passwd -> /etc/shadow
+
+[source,bash]
+----
+pwconv
+# pwck pour verifier le fichier /etc/passwd
+----
