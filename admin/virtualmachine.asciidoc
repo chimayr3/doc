@@ -25,6 +25,27 @@ virt-clone --connect=qemu:///system -o ORIGINAL_GUEST -n NAME -f DISKFILE
 virt-clone --connect=qemu:///system -o template -n mynewserver.local -f /srv/vm/mynewserver.local/mynewserver.local.qcow2
 ----
 
+====== Déférencer une machine
+
+----
+Suppression du fichier /etc/libvirt/qemu/<machine>.xml
+la vm n'est pas supprimé
+----
+
+[source,bash]
+----
+virsh undefine <machine>
+----
+
+====== Référencer une machine
+
+Faire une sauvegarde du fichier xml présent dans /etc/libvirt/qemu/*.xml
+
+[source,bash]
+----
+virsh define <fichier_machine.xml>
+----
+
 ====== Attacher un iso a une machine
 
 [source,bash]
