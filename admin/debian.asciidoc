@@ -3,6 +3,7 @@
 ==== Network configuration
 
 fichier /etc/network/interfaces
+[source]
 ----
 # configuration dhcp eth0
 iface eth0 inet dhcp
@@ -14,3 +15,37 @@ iface eth0 inet static
  gateway 192.0.2.254
 ----
 
+==== Iptables
+
+Configuration à la sauce redhat avec /etc/sysconfig
+
+[source,bash]
+----
+mkdir /etc/sysconfig/
+# configuration iptables dans le fichier suivant
+touch /etc/sysconfig/iptables
+# executer iptables-restore au boot
+touch /etc/network/if-pre-up.d/iptables
+chmod +x /etc/network/if-pre-up.d/iptables
+----
+
+/etc/network/if-pre-up.d/iptables
+[source]
+----
+#!/bin/bash
+/sbin/iptables-restore < /etc/sysconfig/iptables
+----
+
+==== Sécurité
+
+TODO
+----
+> supprimer les groupes inutiles : video/audio/dip/plugdev/floppy ... ??
+----
+
+[source,bash]
+----
+/etc/init.d/rpcbind stop
+/etc/init.d/nfs-common
+aptitude remove rpcbind nfs-common
+----
