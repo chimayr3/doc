@@ -8,6 +8,12 @@
 co:23:respawn:/sbin/agetty -8 115200 ttyS0 linux
 ----
 
+[source,bash]
+----
+# reload inittab
+init q
+----
+
 ====== Acceder a une VM KVM via console
 
 [source,bash]
