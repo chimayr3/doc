@@ -1,0 +1,9 @@
+== Vimdiff cheat sheet
+
+ ]c :        - next difference
+ [c :        - previous difference
+ do          - diff obtain
+ dp          - diff put
+ zo          - open folded text
+ zc          - close folded text
+ :diffupdate - re-scan the files for differences
