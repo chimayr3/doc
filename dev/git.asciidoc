@@ -80,6 +80,17 @@ git commit monFichier1 [monFichier2] ... [monFichierN]
 git commit -a
 ----
 
+====== Show commit
+
+[source,bash]
+----
+# afficher le dernier commit
+git show
+# sinon regarder l'id d'un commit dans git log
+git log
+git show 198ca1d6431ea94d82216a99a534014e5ae88362
+----
+
 ====== push : Envoyer le commit sur la branche principal du dépôt
 
 [source,bash]
