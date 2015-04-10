@@ -107,7 +107,7 @@ git reset --hard HEAD^
 
 [source,bash]
 ----
-git revert commi
+git revert commit
 ----
 
 ==== Gestion des branches
