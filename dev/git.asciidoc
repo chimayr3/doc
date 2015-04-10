@@ -1,0 +1,148 @@
+== Git
+
+Référence : http://doc.ubuntu-fr.org/git
+
+==== Gestion des dépôts
+
+====== Créer un nouveau dépôt
+
+[source,bash]
+----
+mkdir mondepot && cd mondepot
+git init
+----
+
+====== Récupérer un dépot existant
+
+[source,bash]
+----
+git clone https://...
+# ou
+git clone git://...
+----
+
+==== Etat du dépôt
+
+====== Comparer deux version
+
+[source,bash]
+----
+git status
+----
+
+====== savoir ce qui n'est pas encore validé
+
+[source,bash]
+----
+git log
+----
+
+==== Gestion des fichiers
+
+====== Ajouter un fichier
+
+[source,bash]
+----
+git add monFichierouDossier
+# ou pour tout prendre
+git add *
+----
+
+====== Supprimer un fichier en local et distant
+
+[source,bash]
+----
+git rm monFichier
+----
+
+====== Move
+
+[source,bash]
+----
+git mv monFichier monNouveauFichier
+----
+
+==== Gestion des commits
+
+====== Mettre à jour le dépôt local
+
+[source,bash]
+----
+git pull
+----
+
+====== Commit
+
+[source,bash]
+----
+git commit monFichier1 [monFichier2] ... [monFichierN]
+# faire un commit de tous les changements effectuées
+git commit -a
+----
+
+====== push : Envoyer le commit sur la branche principal du dépôt
+
+[source,bash]
+----
+git push origin master
+----
+
+==== Annulation
+
+====== Annuler les changements effectuées depuis le dernier commit
+
+[source,bash]
+----
+git reset --hard HEAD
+----
+
+====== Supprimer le dernier commit
+
+[source,bash]
+----
+git reset --hard HEAD^
+----
+
+====== Restaurer le dépôt tel qu'il l'était lors du commit spécifié
+
+[source,bash]
+----
+git revert commi
+----
+
+==== Gestion des branches
+
+====== Créer une branche test
+
+[source,bash]
+----
+git branch test
+----
+
+====== Lister les branches
+
+[source,bash]
+----
+git branch
+----
+
+====== Changer de branche
+
+[source,bash]
+----
+git checkout maBranche
+# avoir un dépôts propre avant de changer sinon ce n'est pas possible
+----
+
+====== Fusionner la branche courante avec une autre branche
+
+[source,bash]
+----
+git merge maBranche
+# Risque de correction manuelle
+# pour annuler la fusion
+git reset --hard HEAD
+----
+
+
+
