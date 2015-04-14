@@ -1,0 +1,31 @@
+== Documentation SVN
+
+==== Récupérer un dépôt SVN
+
+[source,bash]
+----
+svn co --username <username> svn://<url_depot>
+----
+
+==== Problème lors de la récupération du dépôt
+
+[source,bash]
+----
+# faire un svn cleanup dans le répertoire du dépôt
+svn cleanup
+# puis refaire un svn co
+----
+
+==== Commiter un fichier
+
+[source,bash]
+----
+svn commit -m 'Update file' <monFichier>
+----
+
+==== Ajouter un fichier
+
+[source,bash]
+----
+svn add
+----
