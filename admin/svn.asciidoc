@@ -29,3 +29,13 @@ svn commit -m 'Update file' <monFichier>
 ----
 svn add
 ----
+
+==== Lock & unlock un fichier
+
+[source,bash]
+----
+# locker un fichier
+svn lock <monFichier>
+# unlocker un fichier
+svn unlock <monFichier<
+----
