@@ -7,7 +7,7 @@ Informations :
 
 ====== Afficher la liste des arguments possibles
 
-----
+
 docker
  
 attach    Attach to a running container
@@ -102,4 +102,11 @@ docker inspect eff
 [source,bash]
 ----
 docker push learn/ping
+----
+
+====== Entrer dans un container démarré
+
+[source,bash]
+----
+docker exec -it <container_id> bash
 ----
