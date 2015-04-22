@@ -51,3 +51,14 @@ TODO
 /etc/init.d/nfs-common
 aptitude remove rpcbind nfs-common
 ----
+
+==== Gestion des paquets
+
+Faire l'équivalent d'un yum provide
+[source,bash]
+----
+aptitude install apt-file
+apt-file update
+apt-file find virt-install
+----
+
