@@ -75,3 +75,10 @@ qemu-img create -f qcow2 image.qcow 20G
 ssh -L <local port>:<remote computer>:<remote port> <user>@<remote ip>
 # en local utilise le client vnc vinagre
 ----
+
+====== Démarrer sur le disque dur avec kvm
+
+[source,bash]
+----
+kvm -hdd /dev/sda -m 1024
+----
