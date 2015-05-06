@@ -2,6 +2,7 @@
 
 ====== Config inittab pour console kvm avec virsh
 
+/etc/inittab
 [source]
 ----
 # console for kvm
@@ -12,6 +13,13 @@ co:23:respawn:/sbin/agetty -8 115200 ttyS0 linux
 ----
 # reload inittab
 init q
+----
+
+/boot/grub/menu.lst
+[source,bash]
+----
+# ajout sur la ligne kernel des lignes suivantes :
+kernel [...] serial=tty0 console=ttyS0,115200n8
 ----
 
 ====== Acceder a une VM KVM via console
