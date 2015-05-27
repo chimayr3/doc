@@ -109,6 +109,8 @@ git reset --hard HEAD
 
 ====== Supprimer le dernier commit
 
+Attention cette commande modifie les fichiers, vous perdrez donc vos modifications
+
 [source,bash]
 ----
 git reset --hard HEAD^
